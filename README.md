@@ -29,6 +29,9 @@ O objetivo principal do projeto é permitir que usuários joguem partidas de Jog
 
 ## 📌 Como Rodar o Projeto
 
+git clone https://github.com/seu-usuario/seu-repositorio.git
+
+
 ### Backend
     ✅ Pré-requisitos
     - .NET SDK 7.0+
@@ -37,4 +40,21 @@ O objetivo principal do projeto é permitir que usuários joguem partidas de Jog
     
 1. Navegue até a pasta `backend`:
 ```bash
-cd backend
+    cd backend
+
+    dotnet restore
+
+Configure o appsettings.json
+
+    "ConnectionStrings": {
+        "DefaultConnection": "Host=localhost;Port=5432;Database=jogodavelha;Username=seu_usuario;Password=sua_senha"
+    }
+
+    dotnet ef database update
+
+    dotnet run
+
+### frontend
+    cd ../frontend
+    npm install
+    npm run dev
