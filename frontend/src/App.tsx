@@ -7,6 +7,7 @@ type Game = {
   id: number;
   winner: string | null;
   draw: boolean;
+  playedAt?: string; // adicionado
 };
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         winner: winnerParam,
         draw: drawParam,
         marks: marksParam,
+        playedAt: new Date().toISOString(), // adiciona a data/hora atual
       })
       console.log("Dados enviados com sucesso:", response.data)
     } catch (error) {
@@ -142,7 +144,7 @@ function App() {
           <ul>
             {savedWinners.map((game) => (
               <li key={game.id}>
-                Jogo #{game.id}: {game.winner}
+                Jogo #{game.id}: {game.winner} ({game.playedAt && new Date(game.playedAt).toLocaleString()})
               </li>
             ))}
           </ul>

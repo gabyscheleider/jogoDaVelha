@@ -23,7 +23,8 @@ namespace backend.Controllers
             {
                 Winner = data.Winner,
                 Draw = data.Draw,
-                MarksJson = JsonSerializer.Serialize(data.Marks)
+                MarksJson = JsonSerializer.Serialize(data.Marks),
+                PlayedAt = data.PlayedAt // <-- Salva data e hora da partida
             };
 
             _context.Games.Add(game);
@@ -35,17 +36,20 @@ namespace backend.Controllers
         [HttpGet("all")]
         public IActionResult GetAllGames()
         {
-            var games = _context.Games.ToList();
+            var games = _context.Games
+                .OrderByDescending(g => g.PlayedAt) // <-- Ordena do mais recente para o mais antigo
+                .ToList();
+
             return Ok(games);
         }
-
     }
 
-    // DTO separado para receber do React
+    // DTO usado para receber os dados do frontend (React)
     public class GameDataDTO
     {
         public string? Winner { get; set; }
         public bool Draw { get; set; }
         public Dictionary<string, string> Marks { get; set; } = new();
+        public DateTime PlayedAt { get; set; } // <-- Recebe a data e hora da partida
     }
 }
